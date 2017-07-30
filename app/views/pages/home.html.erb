@@ -1,0 +1,14 @@
+<% if current_user %>
+	<ul>
+		<li><strong>Google:</strong> <%= current_user.google_email %></li>
+		<li><strong>GitHub:</strong> <%= current_user.github_nickname %></li>
+	</ul>
+<% else %>
+	<strong>You're not authenticated</strong>
+<% end %>
+
+<ul>
+	<li><%= link_to "Sign in with Google", "/auth/google" %></li>
+	<li><%= link_to "Sign in with GitHub", "/auth/github" %></li>
+	<li><%= link_to "Sign out", signout_path %></li>
+</ul>

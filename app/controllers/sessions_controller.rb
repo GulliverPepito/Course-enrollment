@@ -10,6 +10,11 @@ class SessionsController < ApplicationController
 		# Log the authorizing user in
 		self.current_user = @auth.user
 
-		render :plain => "GitHub: #{current_user.github_nickname}, Google: #{current_user.google_email}"
+		redirect_to root_url, notice: "Signed in!"
+	end
+
+	def destroy
+		self.current_user = nil
+		redirect_to root_url, notice: "Signed out!"
 	end
 end
