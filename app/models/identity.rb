@@ -8,7 +8,12 @@ class Identity < ApplicationRecord
 	end
 
 	def self.create_from_hash(hash, user = nil)
-		user ||= User.create_from_hash!(hash)
+		logger.debug hash.to_yaml
+		if user
+			user.update_from_hash!(hash)
+		else
+			user = User.create_from_hash!(hash)
+		end
 		Identity.create(
 			:user => user, 
 			:uid => hash['uid'], 

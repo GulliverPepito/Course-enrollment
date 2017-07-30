@@ -10,6 +10,6 @@ class SessionsController < ApplicationController
 		# Log the authorizing user in
 		self.current_user = @auth.user
 
-		render :plain => "Hi #{current_user.name} (#{current_user.nickname})"
+		render :plain => "GitHub: #{current_user.github_nickname}, Google: #{current_user.google_email}"
 	end
 end
