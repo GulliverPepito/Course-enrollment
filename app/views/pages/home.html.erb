@@ -1,14 +1,58 @@
-<% if current_user %>
-	<ul>
-		<li><strong>Google:</strong> <%= current_user.google_email %></li>
-		<li><strong>GitHub:</strong> <%= current_user.github_nickname %></li>
-	</ul>
-<% else %>
-	<strong>You're not authenticated</strong>
+<h1>Course Register</h1>
+
+<br>
+<p>Course description</p>
+
+<div class="social-container">
+    <% if current_user && current_user.google_email %>
+        <%= link_to "javascript:void(0);", { :class => "btn btn-block btn-social btn-google", :disabled => true} do %>
+            <span class="fa fa-google"></span><%= current_user.google_email %>
+        <% end %>
+    <% else %>
+        <%= link_to "/auth/google", { :class=> "btn btn-block btn-social btn-google" } do %>
+            <span class="fa fa-google"></span>Sign in with Google
+        <% end %>
+    <% end %>
+    
+    <% if current_user && current_user.github_nickname %>
+        <%= link_to "javascript:void(0);", { :class => "btn btn-block btn-social btn-github", :disabled => true} do %>
+            <span class="fa fa-github"></span>@<%= current_user.github_nickname %>
+        <% end %>
+    <% else %>
+        <%= link_to "/auth/github", { :class=> "btn btn-block btn-social btn-github" } do %>
+            <span class="fa fa-github"></span>Sign in with GitHub
+        <% end %>
+    <% end %>
+</div>
+
+<br>
+<p>Process explanation</p>
+
+<% if current_user && current_user.google_email && current_user.github_nickname %>
+    <br>
+    <div class="repo-container">
+        <%= form_for current_user, action: :update, :remote => true, :html => {:class => "form"} do |f| %>
+            <div class="form-group row">
+                <%= f.label :manual_first_name, "First name:", class: "col-sm-2 col-form-label" %>
+                <div class="col-sm-10">
+                    <%= f.text_field :manual_first_name, class: "form-control" %>
+                </div>
+            </div>
+            <div class="form-group row">
+                <%= f.label :manual_last_name, "Last name:", class: "col-sm-2 col-form-label" %>
+                <div class="col-sm-10">
+                    <%= f.text_field :manual_last_name, class: "form-control" %>
+                </div>
+            </div>
+    
+            <div class="form-group row">
+                <div class="text-center">
+                    <%= f.submit "Submit", class: "btn btn-primary" %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <br>
 <% end %>
 
-<ul>
-	<li><%= link_to "Sign in with Google", "/auth/google" %></li>
-	<li><%= link_to "Sign in with GitHub", "/auth/github" %></li>
-	<li><%= link_to "Sign out", signout_path %></li>
-</ul>
+<%= link_to "Sign out", signout_path %>

@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Demo</title>
-    <%= csrf_meta_tags %>
 
+<head>
+    <title>Course Register</title>
+    <%= csrf_meta_tags %>
+        
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+    <header>
+        <% if notice %>
+            <div class="alert alert-info" role="alert" id="notice">
+                <%= notice %>
+            </div>
+        <% end %>
+    </header>
+
+    <main>
+        <%= yield %>
+    </main>
+</body>
+
 </html>

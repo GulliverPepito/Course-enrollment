@@ -1,3 +1,54 @@
 // Place all the styles related to the Pages controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// You can use Sass (SCSS) here:http://sass-lang.com/
+
+body {
+	background-color: #1a202d;
+	margin: 0;
+
+	main {
+		margin: 0 auto;
+		max-width: 600px;
+
+		h1 {
+			text-align: center;
+		}
+		a[disabled], a[disabled]:hover {
+			pointer-events: none;
+			cursor: default;
+		}
+		label {
+			font-weight: 100;
+		}
+		.social-container {
+			text-align: center;
+
+			/* Bootstrap */
+			.btn {
+				display: inline-block;
+				margin: 5px auto;
+				width: 200px;
+			}
+		}
+
+		/* Bootstrap */
+		.btn:hover {
+			color: #fff;
+		}
+	}
+}
+@media screen and (max-width:768px) {
+	main {
+		padding: 0 10%;
+
+		.social-container {
+			margin: 0 auto;
+			width: 80%;
+
+			/* Bootstrap */
+			.btn {
+				width: 100%;
+			}
+		}
+	}
+}
