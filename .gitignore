@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore /public because assets are compiled in deployment
+/public 
+
 # Ignore bundler config.
 /.bundle
 
