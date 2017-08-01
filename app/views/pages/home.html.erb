@@ -25,6 +25,9 @@
     <% end %>
 </div>
 
+<br>
+<p>Process explanation</p>
+
 <% if current_user && current_user.ready_for_repo_creation %>
     <br>
     <div class="repo-container">
@@ -54,8 +57,6 @@
         <% end %>
     </div>
 <% elsif current_user && current_user.creating_repo %>
-<br>
-<p>Process explanation</p>
 <div class="alert alert-success text-center wait">
     <h4>Wait...</h4> 
     <hr/>
@@ -70,8 +71,8 @@
 <p>Thanks for using this app.</p>
 <% end %>
 
-<% if current_user %>
 <br>
+<% if current_user %>
 <%= link_to "Sign out", signout_path %>
-<p>Created by <a href="https://github.com/aaossa">Antonio Ossa</a></p>
 <% end %>
+<p>Created by <a href="https://github.com/aaossa">Antonio Ossa</a></p>

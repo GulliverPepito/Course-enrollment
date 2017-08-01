@@ -1,0 +1,57 @@
+AllCops:
+  DisplayCopNames: true
+  TargetRailsVersion: 5.1
+  TargetRubyVersion: 2.3.1
+  Include:
+    - '**/Gemfile'
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+
+
+##### Layout #####
+
+Layout/EndOfLine:
+  Enabled: false
+
+Layout/IndentationConsistency:
+  EnforcedStyle: rails
+
+
+##### Lint #####
+
+Lint/AssignmentInCondition:
+  Enabled: false
+
+Lint/ScriptPermission:
+  Enabled: false
+
+##### Metrics #####
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+
+##### Rails #####
+
+Rails:
+  Enabled: true
+
+
+##### Style #####
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_helper.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
