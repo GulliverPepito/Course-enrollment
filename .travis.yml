@@ -1,0 +1,26 @@
+sudo: false
+language: ruby
+cache: bundler
+
+rvm:
+  - 2.3.1
+
+gemfile:
+  - Gemfile
+
+before_install:
+  - gem instal bundler
+  - gem install rubocop
+
+install:
+  - bundle install
+
+script:
+  - rubocop -c .rubocop.yml --cache false
+
+notifications:
+  email:
+    recipients:
+      - aaossa@uc.cl
+    on_success: change
+    on_failure: always
