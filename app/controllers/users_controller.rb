@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def update
   	@user = current_user
-  	if @user.update_attributes(user_params)
+  	if verify_recaptcha(model: @user) && @user.update_attributes(user_params)
       message = if @user.repo_order
           "Updated data!"
         else
