@@ -10,7 +10,7 @@ body {
 		margin: 0 auto;
 		max-width: 600px;
 
-		h1 {
+		h1, h2, h3 {
 			text-align: center;
 		}
 		a[disabled], a[disabled]:hover {
@@ -19,6 +19,10 @@ body {
 		}
 		label {
 			font-weight: 100;
+		}
+		.wait {
+			margin: 0 auto;
+			width: 60%;
 		}
 		.social-container {
 			text-align: center;

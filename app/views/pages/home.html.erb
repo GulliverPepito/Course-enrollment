@@ -25,10 +25,7 @@
     <% end %>
 </div>
 
-<br>
-<p>Process explanation</p>
-
-<% if current_user && current_user.google_email && current_user.github_nickname %>
+<% if current_user && current_user.ready_for_repo_creation %>
     <br>
     <div class="repo-container">
         <%= form_for current_user, action: :update, :remote => true, :html => {:class => "form"} do |f| %>
@@ -52,7 +49,25 @@
             </div>
         <% end %>
     </div>
-    <br>
+<% elsif current_user && current_user.creating_repo %>
+<br>
+<p>Process explanation</p>
+<div class="alert alert-success text-center wait">
+    <h4>Wait...</h4> 
+    <hr/>
+    <i class="fa fa-warning fa-2x"></i>
+    <p>
+        Your repo is being created. Check your email, reload or go to GitHub
+    </p>
+</div>
+<% elsif current_user && current_user.repo_is_ready %>
+<br>
+<h3><%= link_to "Go to your repo", current_user.repo_url %></h3>
+<p>Thanks for using this app.</p>
 <% end %>
 
+<% if current_user %>
+<br>
 <%= link_to "Sign out", signout_path %>
+<p>Created by <a href="https://github.com/aaossa">Antonio Ossa</a></p>
+<% end %>

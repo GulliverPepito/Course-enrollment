@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731053813) do
+ActiveRecord::Schema.define(version: 20170801040937) do
 
   create_table "identities", force: :cascade do |t|
     t.string "provider"
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 20170731053813) do
     t.string "google_token"
     t.string "manual_first_name"
     t.string "manual_last_name"
+    t.boolean "repo_order"
+    t.boolean "repo_ready"
+    t.string "repo_url"
+    t.string "repo_name"
   end
 
 end

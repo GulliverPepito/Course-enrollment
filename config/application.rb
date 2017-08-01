@@ -14,5 +14,8 @@ module Demo
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    config.COURSE_ORGANIZATION = 'IIC2233'
+    config.TEMPLATE_URL = 'https://github.com/aaossa/IIC2233-student-template.git'
   end
 end

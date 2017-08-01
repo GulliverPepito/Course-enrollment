@@ -1,5 +1,39 @@
 class User < ApplicationRecord
-	has_many :identities
+	include ApplicationHelper
+
+	has_many :identities, :dependent => :destroy
+
+	def setup_repository
+		# Protect this
+		if !self.repo_ready && self.update_attributes(:repo_order => true)
+			Thread.new do
+				fullname = "#{manual_first_name} #{manual_last_name}"
+				status, repo_name, repo_url = create_repository(github_nickname, fullname)
+				return unless status == 201
+				status, content = import_repository(github_nickname)
+				return unless status == 201
+				status, content = add_collaborator(github_nickname)
+				return unless status == 201
+				self.update_attributes(
+					:repo_ready => true,
+					:repo_name => repo_name,
+					:repo_url => repo_url,
+				)
+			end
+		end
+	end
+
+	def ready_for_repo_creation
+		self.google_email && self.github_nickname && !self.repo_order
+	end
+
+	def creating_repo
+		self.google_email && self.github_nickname && self.repo_order && !self.repo_ready
+	end
+
+	def repo_is_ready
+		self.google_email && self.github_nickname && self.repo_order && self.repo_ready
+	end
 
 	def self.create_from_hash!(hash)
 		if hash['provider'] == 'github'

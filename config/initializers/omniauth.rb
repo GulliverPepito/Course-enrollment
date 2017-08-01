@@ -1,6 +1,6 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-	provider :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET']
-	provider :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'],
+	provider :github, Rails.application.secrets.GITHUB_CLIENT_ID, Rails.application.secrets.GITHUB_CLIENT_SECRET
+	provider :google_oauth2, Rails.application.secrets.GOOGLE_CLIENT_ID, Rails.application.secrets.GOOGLE_CLIENT_SECRET,
 	{
 		name: 'google',
 		prompt: 'select_account',

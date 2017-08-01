@@ -18,6 +18,6 @@
 
 document.addEventListener("turbolinks:load", function() {
 	console.log("Page change");
-	$(".alert").delay(2000).slideUp(500);
+	$("#notice").delay(2000).slideUp(500);
 });
 

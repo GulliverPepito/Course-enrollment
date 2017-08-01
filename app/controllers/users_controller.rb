@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
   def update
   	@user = current_user
-  	message = if @user.update_attributes(user_params)
-  		"Saved data!"
-  	else 
-  		"Unable to save data!"
+  	if @user.update_attributes(user_params)
+      message = if @user.repo_order
+          "Updated data!"
+        else
+          @user.setup_repository
+          "Creating repository!"
+        end
+  	else
+  		message = "Unable to save data!"
   	end
   	redirect_to root_url, notice: message
   end
