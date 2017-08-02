@@ -1,0 +1,5 @@
+default: &default
+  paragraph: >-
+    This is my very very
+    very 
+    very long text without ending in newline
