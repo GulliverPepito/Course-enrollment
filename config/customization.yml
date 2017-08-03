@@ -1,5 +1,32 @@
 default: &default
-  paragraph: >-
-    This is my very very
-    very 
-    very long text without ending in newline
+  github:
+    organization: IIC2233
+    template_url: https://github.com/aaossa/IIC2233-student-template.git
+    repository:
+      name:
+        # prefix + student_username + suffix
+        prefix: ""
+        suffix: "-iic2233-2017-2"
+      description:
+        # prefix + student_fullname + suffix
+        prefix: "Repositorio para "
+        suffix: ""
+      private: false
+      has_projects: false
+      has_wiki: true
+      member_permission: push
+  home:
+    title: Course Register
+    course_description: >-
+      Course description
+    process_description: >-
+      Process description
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

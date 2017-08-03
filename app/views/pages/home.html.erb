@@ -1,7 +1,7 @@
-<h1>Course Register</h1>
+<h1><%= Rails.configuration.custom['home']['title'] %></h1>
 
 <br>
-<p>Course description</p>
+<p><%= Rails.configuration.custom['home']['course_description'] %></p>
 
 <div class="social-container">
     <% if current_user && current_user.google_email %>
@@ -26,7 +26,7 @@
 </div>
 
 <br>
-<p>Process explanation</p>
+<p><%= Rails.configuration.custom['home']['process_description'] %></p>
 
 <% if current_user && current_user.ready_for_repo_creation %>
     <br>

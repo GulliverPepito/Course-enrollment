@@ -6,34 +6,35 @@ require 'json'
 
 module ApplicationHelper
   GITHUB_OAUTH_TOKEN = Rails.application.secrets.GITHUB_OAUTH_TOKEN
-  COURSE_ORGANIZATION = Rails.configuration.COURSE_ORGANIZATION
-  TEMPLATE_URL = Rails.configuration.TEMPLATE_URL
-
+  GITHUB_ORGANIZATION = Rails.configuration.custom['github']['organization']
+  GITHUB_MEMBER_TEMPLATE = Rails.configuration.custom['github']['template_url']
+  GITHUB_REPO_OPTIONS = Rails.configuration.custom['github']['repository']
   def create_repository(student_username, student_fullname)
     # https://developer.github.com/v3/repos/#create
-    uri = "https://api.github.com/orgs/#{COURSE_ORGANIZATION}/repos"
+    uri = "https://api.github.com/orgs/#{GITHUB_ORGANIZATION}/repos"
     header = {
       'Authorization': "token #{GITHUB_OAUTH_TOKEN}",
       'Content-Type': 'application/json',
     }
     body = {
       'name': repo_name(student_username),
-      'description': "Repositorio para #{student_fullname}",
-      'private': true,
-      'has_projects': false,
-      'has_wiki': false,
+      'description': repo_description(student_fullname),
+      'private': GITHUB_REPO_OPTIONS['private'],
+      'has_projects': GITHUB_REPO_OPTIONS['has_projects'],
+      'has_wiki': GITHUB_REPO_OPTIONS['has_wiki'],
     }
     # rubocop:disable LineLength
     s, c = http_request_to(uri: uri, http_method: 'post', header: header, body: body)
     # rubocop:enable LineLength
     [s, c.fetch('full_name'), c.fetch('html_url')]
   end
+  # rubocop:enable AbcSize
 
   def import_repository(student_username)
     # https://developer.github.com/v3/migration/source_imports/#start-an-import
     student_repository = repo_name(student_username)
     # rubocop:disable LineLength
-    uri = "https://api.github.com/repos/#{COURSE_ORGANIZATION}/#{student_repository}/import"
+    uri = "https://api.github.com/repos/#{GITHUB_ORGANIZATION}/#{student_repository}/import"
     # rubocop:enable LineLength
     header = {
       'Accept': 'application/vnd.github.barred-rock-preview',
@@ -41,7 +42,7 @@ module ApplicationHelper
       'Content-Type': 'application/json',
     }
     body = {
-      'vcs_url': TEMPLATE_URL,
+      'vcs_url': GITHUB_MEMBER_TEMPLATE,
       'vcs': 'git',
     }
     http_request_to(uri: uri, http_method: 'put', header: header, body: body)
@@ -51,7 +52,7 @@ module ApplicationHelper
     # https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
     student_repository = repo_name(student_username)
     # rubocop:disable LineLength
-    uri = "https://api.github.com/repos/#{COURSE_ORGANIZATION}/#{student_repository}/collaborators/#{student_username}"
+    uri = "https://api.github.com/repos/#{GITHUB_ORGANIZATION}/#{student_repository}/collaborators/#{student_username}"
     # rubocop:enable LineLength
     header = {
       'Accept': 'application/vnd.github.swamp-thing-preview+json',
@@ -59,7 +60,7 @@ module ApplicationHelper
       'Content-Type': 'application/json',
     }
     body = {
-      'permission': 'push',
+      'permission': GITHUB_REPO_OPTIONS['member_permission'],
     }
     http_request_to(uri: uri, http_method: 'put', header: header, body: body)
   end
@@ -97,6 +98,16 @@ module ApplicationHelper
     # rubocop:enable Metrics/AbcSize
 
     def repo_name(student_username)
-      "#{student_username}-iic2233-2017-2"
+      format("#{prefix}#{student_username}#{suffix}",
+             prefix: GITHUB_REPO_OPTIONS['name']['prefix'],
+             student_username: student_username,
+             suffix: GITHUB_REPO_OPTIONS['name']['suffix'])
+    end
+
+    def repo_description(student_fullname)
+      format("#{prefix}#{student_fullname}#{suffix}",
+             prefix: GITHUB_REPO_OPTIONS['description']['prefix'],
+             student_fullname: student_fullname,
+             suffix: GITHUB_REPO_OPTIONS['description']['suffix'])
     end
 end
