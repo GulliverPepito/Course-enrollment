@@ -35,3 +35,9 @@ What can you customize here? Using `config/customizations.yml` file, you can con
 ##### ReCaptcha
 
 In our form we use ReCaptcha, thanks to [this project](https://github.com/ambethia/recaptcha). Just generate a ReCaptcha Site Key and a Site Secret as explained [here](https://www.google.com/recaptcha/admin) and save them as environment variables (`RECAPTCHA_SITE_KEY` and `RECAPTCHA_SITE_SECRET`).
+
+---
+
+# Happy users :heart:
+
+* [IIC2233](github.com/IIC2233): IIC2233 Programación Avanzada @ Pontificia Universidad Católica de Chile. (2017-2)
