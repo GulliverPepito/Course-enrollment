@@ -1,6 +1,7 @@
 default: &default
   github:
     organization: IIC2233
+    organization_type: organization
     template_url: https://github.com/aaossa/IIC2233-student-template.git
     repository:
       name:
@@ -24,6 +25,9 @@ default: &default
 
 development:
   <<: *default
+  github:
+    organization: Syllabot
+    organization_type: user
 
 test:
   <<: *default

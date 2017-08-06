@@ -6,12 +6,18 @@ require 'json'
 
 module ApplicationHelper
   GITHUB_OAUTH_TOKEN = Rails.application.secrets.GITHUB_OAUTH_TOKEN
-  GITHUB_ORGANIZATION = Rails.configuration.custom['github']['organization']
+  GITHUB_ORG = Rails.configuration.custom['github']['organization']
+  GITHUB_ORG_TYPE = Rails.configuration.custom['github']['organization_type']
   GITHUB_MEMBER_TEMPLATE = Rails.configuration.custom['github']['template_url']
   GITHUB_REPO_OPTIONS = Rails.configuration.custom['github']['repository']
+  # rubocop:disable MethodLength
   def create_repository(student_username, student_fullname)
     # https://developer.github.com/v3/repos/#create
-    uri = "https://api.github.com/orgs/#{GITHUB_ORGANIZATION}/repos"
+    uri = if GITHUB_ORG_TYPE == 'organization'
+            "https://api.github.com/orgs/#{GITHUB_ORG}/repos"
+          else
+            'https://api.github.com/user/repos'
+          end
     header = {
       'Authorization': "token #{GITHUB_OAUTH_TOKEN}",
       'Content-Type': 'application/json',
@@ -28,14 +34,14 @@ module ApplicationHelper
     # rubocop:enable LineLength
     [s, c.fetch('full_name'), c.fetch('html_url')]
   end
-  # rubocop:enable AbcSize
+  # rubocop:enable MethodLength
 
   def import_repository(student_username)
     # https://developer.github.com/v3/migration/source_imports/#start-an-import
     student_repository = repo_name(student_username)
-    # rubocop:disable LineLength
-    uri = "https://api.github.com/repos/#{GITHUB_ORGANIZATION}/#{student_repository}/import"
-    # rubocop:enable LineLength
+    uri = format("https://api.github.com/repos/#{owner}/#{repo}/import",
+                 owner: GITHUB_ORG,
+                 repo: student_repository)
     header = {
       'Accept': 'application/vnd.github.barred-rock-preview',
       'Authorization': "token #{GITHUB_OAUTH_TOKEN}",
@@ -52,7 +58,10 @@ module ApplicationHelper
     # https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
     student_repository = repo_name(student_username)
     # rubocop:disable LineLength
-    uri = "https://api.github.com/repos/#{GITHUB_ORGANIZATION}/#{student_repository}/collaborators/#{student_username}"
+    uri = format("https://api.github.com/repos/#{owner}/#{repo}/collaborators/#{username}",
+                 owner: GITHUB_ORG,
+                 repo: student_repository,
+                 username: student_username)
     # rubocop:enable LineLength
     header = {
       'Accept': 'application/vnd.github.swamp-thing-preview+json',
@@ -95,7 +104,6 @@ module ApplicationHelper
         raise 'Unknown HTTP method'
       end
     end
-    # rubocop:enable Metrics/AbcSize
 
     def repo_name(student_username)
       format("#{prefix}#{student_username}#{suffix}",
