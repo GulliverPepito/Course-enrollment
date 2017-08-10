@@ -39,9 +39,9 @@ module ApplicationHelper
   def import_repository(student_username)
     # https://developer.github.com/v3/migration/source_imports/#start-an-import
     student_repository = repo_name(student_username)
-    uri = format("https://api.github.com/repos/#{owner}/#{repo}/import",
-                 owner: GITHUB_ORG,
-                 repo: student_repository)
+    # rubocop:disable LineLength
+    uri = "https://api.github.com/repos/#{GITHUB_ORG}/#{student_repository}/import"
+    # rubocop:enable LineLength
     header = {
       'Accept': 'application/vnd.github.barred-rock-preview',
       'Authorization': "token #{GITHUB_OAUTH_TOKEN}",
@@ -58,10 +58,7 @@ module ApplicationHelper
     # https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
     student_repository = repo_name(student_username)
     # rubocop:disable LineLength
-    uri = format("https://api.github.com/repos/#{owner}/#{repo}/collaborators/#{username}",
-                 owner: GITHUB_ORG,
-                 repo: student_repository,
-                 username: student_username)
+    uri = "https://api.github.com/repos/#{GITHUB_ORG}/#{student_repository}/collaborators/#{student_username}"
     # rubocop:enable LineLength
     header = {
       'Accept': 'application/vnd.github.swamp-thing-preview+json',
@@ -106,16 +103,14 @@ module ApplicationHelper
     end
 
     def repo_name(student_username)
-      format("#{prefix}#{student_username}#{suffix}",
-             prefix: GITHUB_REPO_OPTIONS['name']['prefix'],
-             student_username: student_username,
-             suffix: GITHUB_REPO_OPTIONS['name']['suffix'])
+      prefix = GITHUB_REPO_OPTIONS['name']['prefix']
+      suffix = GITHUB_REPO_OPTIONS['name']['suffix']
+      "#{prefix}#{student_username}#{suffix}"
     end
 
     def repo_description(student_fullname)
-      format("#{prefix}#{student_fullname}#{suffix}",
-             prefix: GITHUB_REPO_OPTIONS['description']['prefix'],
-             student_fullname: student_fullname,
-             suffix: GITHUB_REPO_OPTIONS['description']['suffix'])
+      prefix = GITHUB_REPO_OPTIONS['description']['prefix']
+      suffix = GITHUB_REPO_OPTIONS['description']['suffix']
+      "#{prefix}#{student_fullname}#{suffix}"
     end
 end
