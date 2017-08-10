@@ -31,7 +31,7 @@
 <% if current_user && current_user.ready_for_repo_creation %>
     <br>
     <div class="repo-container">
-        <%= form_for current_user, action: :update, :remote => true, :html => {:class => "form"} do |f| %>
+        <%= form_for current_user, action: :update, :html => {:class => "form"} do |f| %>
             <div class="form-group row">
                 <%= f.label :manual_first_name, "First name:", class: "col-sm-2 col-form-label" %>
                 <div class="col-sm-10">

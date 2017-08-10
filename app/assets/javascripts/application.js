@@ -13,11 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require rails-ujs
-//= require turbolinks
 //= require_tree .
 
-document.addEventListener("turbolinks:load", function() {
-	console.log("Page change");
+document.addEventListener("load", function() {
 	$("#notice").delay(2000).slideUp(500);
 });
-
